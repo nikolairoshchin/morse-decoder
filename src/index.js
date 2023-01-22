@@ -38,8 +38,30 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
-}
+    let result = '';
+    let currentLetter = '';
+
+    morseToDigits();
+    const numberOfLetter = expr.length / 10;
+    for (let i = 0; i < numberOfLetter; i++) {
+        currentLetter = expr.substr(i * 10, 10);
+        result = result + MORSE_DIGITS[currentLetter];
+    };
+    return result;
+};
+
+let MORSE_DIGITS = {
+    '**********': ' ',
+};
+
+const morseToDigits = () => {
+    let newKey = '';
+    for (let key in MORSE_TABLE) {
+        newKey = key.replace(/\./g, "10").replace(/-/g, "11").padStart(10, "0");
+        MORSE_DIGITS[newKey] = MORSE_TABLE[key];
+    };
+    return MORSE_DIGITS;
+};
 
 module.exports = {
     decode
